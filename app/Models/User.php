@@ -52,12 +52,16 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
 
+    protected $hidden = [ 
+        "password_hash","updated_at", "created_at", "id", "last_login"
+    ];
+
     public function teachers(){
         return $this->hasMan(teachers::class);  
     }
 
     public function student() {
-        return $this->hasMany(students::class);
+        return $this->hasOne(students::class);
     }
 
     public function audit() {

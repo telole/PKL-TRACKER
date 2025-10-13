@@ -86,19 +86,35 @@ class AuthController extends Controller
             "password" => "required"
         ]);
 
-        $validate = $validator->validate();
-
-
-        if ($validate->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 "message" => "error during validation",
-                "errors" => $validate->errors()
-            ]);
+                "errors" => $validator->errors()
+            ], 422);
          }
 
-         $user = User::where("email", $request->email)->first();
-         if (!$user) {
-            
-         }
+
+        $validate = $validator->validate();
+
+        $user = User::where("email",$validate["email"])->first();
+        if($user &&(Hash::check($validate["password"], $user->password_hash))){ 
+            $user->save();
+
+            return response()->json([
+                "message" => "Login Success",
+                "token" => $user->createToken("auth")->plainTextToken,
+                "user" => $user
+            ]);
+        }else{
+            return response()->json([
+                "message" => "invalid Credentials"
+            ], 422);
+        }
+    }
+    public function Logout(Request $request) { 
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            "message"=> "Logout Success"
+        ]);
     }
 }

@@ -11,10 +11,10 @@ class companies extends Model
     protected $guarded = [];
 
     public function supervisors() {
-        return $this->hasMany(Supervisors::class);
+        return $this->hasMany(supervisors::class, "company_id", "id");
     }
 
     public function internship() {
-        return $this->hasMany(internships::class);
+        return $this->hasMany(internships::class, "company_id", "id");
     }
 }

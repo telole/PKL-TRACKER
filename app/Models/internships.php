@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class internships extends Model
 {
     //
-    protected $table = 'internship';
+    protected $table = 'internships';
     protected $guarded = [];
 
     public function students() {
@@ -23,7 +23,7 @@ class internships extends Model
     }
 
     public function company() {
-        return $this->belongsTo(companies::class, "companies_id", "id");
+        return $this->belongsTo(companies::class, "company_id", "id");
     }
 
     public function supervisor() {

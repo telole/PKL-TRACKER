@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class students extends Model
 {
     //
-    protected $table = "student";
+    protected $table = "students";
+    public $timestamps = false;
 
     protected $guarded = ['id'];
 
