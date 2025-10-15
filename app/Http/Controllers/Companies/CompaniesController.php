@@ -16,7 +16,7 @@ class CompaniesController extends Controller
         //
         return response()->json([
             "message" => "success",
-            "data" =>  companies::with("supervisors", "internship")->get()
+            "data" =>  companies::with("supervisors")->get()
         ]);
     }
 

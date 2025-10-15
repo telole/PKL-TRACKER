@@ -9,7 +9,7 @@ class supervisors extends Model
     //
     protected $guarded = [];
     protected $table = "supervisors";
-     
+
 
     public function companies() {
         return $this->belongsTo(companies::class, "id", "company_id");

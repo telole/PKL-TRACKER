@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\reports;
+namespace App\Http\Controllers\Laporan;
 
 use App\Http\Controllers\Controller;
+use App\Models\reports;
 use Illuminate\Http\Request;
 
-class RepotsController extends Controller
+class AdminLaporanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +14,11 @@ class RepotsController extends Controller
     public function index()
     {
         //
+        $document = reports::all();
+
+        return response()->json([
+            "data" => $document
+        ]);
     }
 
     /**
