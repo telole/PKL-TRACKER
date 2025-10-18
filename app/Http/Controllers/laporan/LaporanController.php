@@ -15,7 +15,7 @@ class LaporanController extends Controller
     public function index()
     {
         //
-         $user = Auth::user();
+    $user = Auth::user();
 
     if ($user->role !== 'student') {
         return response()->json(['message' => 'Akses ditolak'], 403);
@@ -61,14 +61,8 @@ class LaporanController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $repots = reports::findOrFail($id);
-        if(!$repots) {
-            return response()->json([
-                "message" => "Data NotFound"
-            ], 404);
-        }
 
-        
+
     }
 
     /**

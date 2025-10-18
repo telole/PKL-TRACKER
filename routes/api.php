@@ -31,6 +31,7 @@ route::prefix("v1")->group(function () {
 
 
 
-        route::get('repotsall', [AdminLaporanController::class, 'index'])   ;
+        route::get('reportsa', [AdminLaporanController::class, 'index']);
+        route::put('/reportsa/{id}', [AdminLaporanController::class, "update"]);
     });
 });

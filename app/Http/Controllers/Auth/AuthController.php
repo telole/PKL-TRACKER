@@ -18,13 +18,13 @@ class AuthController extends Controller
     public function Register(Request $request){
         $validator = Validator::make($request->all(), [
             "username" => "required|string|max:50|unique:users,username",
-            "password" => "required|string|min:6|confirmed",
+            "password" => "required|min:6",
             "email"=> "required|email|unique:users,email",
             "full_name" => "required|string|max:100",
             'role'=> 'required|in:student,admin,teacher,supervisor'
         ]);
 
-        if($validator->fails()){ 
+        if($validator->fails()){
             return response()->json([
                 "message" => "Validation Fails",
                 "errors" => $validator->errors()
@@ -97,7 +97,7 @@ class AuthController extends Controller
         $validate = $validator->validate();
 
         $user = User::where("email",$validate["email"])->first();
-        if($user &&(Hash::check($validate["password"], $user->password_hash))){ 
+        if($user &&(Hash::check($validate["password"], $user->password_hash))){
             $user->save();
 
             return response()->json([
@@ -111,7 +111,7 @@ class AuthController extends Controller
             ], 422);
         }
     }
-    public function Logout(Request $request) { 
+    public function Logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             "message"=> "Logout Success"

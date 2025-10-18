@@ -10,6 +10,7 @@ class teachers extends Model
 
     protected $table = "teachers";
     protected $guarded = ['id'];
+    public $timestamps = false;
 
 
     public function Users() {
