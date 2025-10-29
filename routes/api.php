@@ -5,6 +5,8 @@ use App\Http\Controllers\Companies\CompaniesController;
 use App\Http\Controllers\Internship\internshipController;
 use App\Http\Controllers\Laporan\AdminLaporanController;
 use App\Http\Controllers\laporan\LaporanController;
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Supervisors\SupervisorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +31,15 @@ route::prefix("v1")->group(function () {
 
         route::get("reports", [LaporanController::class, "index"]);
 
-
-
         route::get('reportsa', [AdminLaporanController::class, 'index']);
         route::put('/reportsa/{id}', [AdminLaporanController::class, "update"]);
+
+
+        route::get('supervisors', [SupervisorController::class, 'index']);
+        route::get('supervisors/{id}', [SupervisorController::class, 'show']);
+        route::post('supervisors', [SupervisorController::class, 'store']);
+        route::delete('supervisors', [SupervisorController::class, 'destroy']);
+
+        route::get('students', [StudentController::class, 'index']);
     });
 });

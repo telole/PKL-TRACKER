@@ -25,7 +25,7 @@ class SupervisorController extends Controller
                 'message' => 'access Denied'
             ]);
         }
-        $supervisors = supervisors::with('companies.internship', 'users')->get();
+        $supervisors = supervisors::with('companies.internship', 'user')->get();
 
         return response()->json([
             "message" => "success",
@@ -86,8 +86,7 @@ class SupervisorController extends Controller
      */
     public function show(string $id)
     {
-        //
-        // Hanya teacher yang boleh melihat data supervisor
+
     $auth = Auth::user();
     if ($auth->role !== 'teacher') {
         return response()->json(['message' => 'Access denied'], 403);
@@ -120,5 +119,16 @@ class SupervisorController extends Controller
     public function destroy(string $id)
     {
         //
+        $supervisor = supervisors::find($id);
+        if(!$supervisor) {
+            return response()->json([
+                "ga ketemu jir"
+            ]);
+        }
+        $supervisor->delete();
+
+        return response()->json([
+            "message" => "data deleted successfully"
+        ]);
     }
 }

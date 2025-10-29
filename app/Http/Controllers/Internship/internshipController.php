@@ -14,9 +14,9 @@ class internshipController extends Controller
     public function index()
     {
         //
-        $student = auth()->user()->student;
-        $students = $student->id;
-        $intern = internships::with(['company', 'reports', 'students', 'teacher', 'supervisor.user'])->where('student_id', $students)->get();
+        // $student = auth()->user()->student;
+        // $students = $student->id;
+        $intern = internships::with(['company', 'reports', 'students', 'teacher', 'supervisor.user'])->get();
 
         return response()->json([
             'data' => $intern
@@ -30,7 +30,7 @@ class internshipController extends Controller
     {
         //
         $student = auth()->user()->student;
-        $validator = $request->validate([ 
+        $validator = $request->validate([
         'company_id' => 'required|exists:companies,id',
         'teacher_id' => 'required|exists:teachers,id',
         'supervisor_id' => 'required|exists:supervisors,id',
@@ -49,7 +49,7 @@ class internshipController extends Controller
         return response()->json([
             "Successssss" => $internship
         ]);
-        
+
     }
 
     /**

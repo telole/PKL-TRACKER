@@ -12,7 +12,7 @@ class supervisors extends Model
 
 
     public function companies() {
-        return $this->belongsTo(companies::class, "id", "company_id");
+        return $this->belongsTo(companies::class, "company_id", "id");
     }
 
     public function user() {
