@@ -118,26 +118,49 @@ class AuthController extends Controller
         ]);
     }
 
-    public function Authme(Request $request) {
-         $user = $request->user()->load('student' || 'teachers');
+    public function Authme(Request $request)
+    {
+        $user = $request->user();
 
         if (!$user) {
-            return response()->json([
-                'message' => 'Unauthenticated'
-            ], 401);
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
-        // for eksampel i need to make somethin workable with my brain
+        if (method_exists($user, 'student')) {
+            try {
+                $user->load('student');
+            } catch (\Exception $e) {
+                
+            }
+        }
 
+        if (method_exists($user, 'teachers')) {
+            try {
+                $user->load('teachers');
+            } catch (\Exception $e) {
+                // Abaikan jika relasi tidak ada
+            }
+        }
+
+        // Ambil token yang sedang aktif (jika pakai Sanctum)
         $currentAccessToken = null;
         if (method_exists($user, 'currentAccessToken')) {
             $currentAccessToken = $user->currentAccessToken();
         }
 
+        // Buang field yang null dari response
+        $userArray = array_filter($user->toArray(), function ($value) {
+            return $value !== null;
+        });
+
         return response()->json([
             'message' => 'success',
-            'user' => $user,
-            'token' => $currentAccessToken
+            'user' => $userArray,
+            'token' => $currentAccessToken ? [
+                'name' => $currentAccessToken->name ?? null,
+                'abilities' => $currentAccessToken->abilities ?? [],
+                'created_at' => $currentAccessToken->created_at ?? null,
+            ] : null,
         ], 200);
     }
 
