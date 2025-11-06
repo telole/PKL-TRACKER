@@ -130,7 +130,7 @@ class AuthController extends Controller
             try {
                 $user->load('student');
             } catch (\Exception $e) {
-                
+
             }
         }
 
@@ -138,17 +138,16 @@ class AuthController extends Controller
             try {
                 $user->load('teachers');
             } catch (\Exception $e) {
-                // Abaikan jika relasi tidak ada
             }
         }
 
-        // Ambil token yang sedang aktif (jika pakai Sanctum)
+        // take the token from sanctum peler
         $currentAccessToken = null;
         if (method_exists($user, 'currentAccessToken')) {
             $currentAccessToken = $user->currentAccessToken();
         }
 
-        // Buang field yang null dari response
+        
         $userArray = array_filter($user->toArray(), function ($value) {
             return $value !== null;
         });
