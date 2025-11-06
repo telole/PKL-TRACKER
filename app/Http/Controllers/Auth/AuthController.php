@@ -117,4 +117,29 @@ class AuthController extends Controller
             "message"=> "Logout Success"
         ]);
     }
+
+    public function Authme(Request $request) {
+         $user = $request->user()->load('student' || 'teachers');
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        // for eksampel i need to make somethin workable with my brain
+
+        $currentAccessToken = null;
+        if (method_exists($user, 'currentAccessToken')) {
+            $currentAccessToken = $user->currentAccessToken();
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'user' => $user,
+            'token' => $currentAccessToken
+        ], 200);
+    }
+
+
 }

@@ -33,7 +33,7 @@ route::prefix("v1")->group(function () {
 
         route::get('reportsa', [AdminLaporanController::class, 'index']);
         route::put('/reportsa/{id}', [AdminLaporanController::class, "update"]);
-
+        route::delete('/reportsa/{id}', [AdminLaporanController::class, "destroy"]);
 
         route::get('supervisors', [SupervisorController::class, 'index']);
         route::get('supervisors/{id}', [SupervisorController::class, 'show']);
@@ -41,5 +41,11 @@ route::prefix("v1")->group(function () {
         route::delete('supervisors', [SupervisorController::class, 'destroy']);
 
         route::get('students', [StudentController::class, 'index']);
+        route::post('students', [StudentController::class, 'store']);
+
+
+
+        //Auth
+        route::get('auth/me', [AuthController::class, 'Authme']);
     });
 });
